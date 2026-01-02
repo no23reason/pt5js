@@ -12,7 +12,10 @@ export function parseNcp(rawLines: string[]): NcpFile {
 
         if (rawLine.startsWith("N")) {
             commands.push(...parseLine(rawLine, currentCommandType));
-            currentCommandType = commands.length ? commands.at(-1)?.commandType : undefined;
+            // Only G commands can be ongoing (from the ones supported)
+            currentCommandType = commands.findLast((command) =>
+                command.commandType.startsWith("G"),
+            )?.commandType;
         }
     }
 

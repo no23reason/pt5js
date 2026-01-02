@@ -16,13 +16,20 @@ function serializeArgument(name: string, micrometers: number): string {
     return `${name}${sign}${Math.abs(micrometers)}`;
 }
 
-function serializeCommand(lineNumber: number, command: Pt5Command): string {
+function serializeCommand(lineNumber: number, command: Pt5Command): string | undefined {
     const serializedArguments = Object.entries(command.args)
         .map(([argName, argValue]) => serializeArgument(argName, argValue))
         .filter(Boolean)
         .join(" ");
 
+    // HACK skip commands without supported arguments
+    // TODO this should be handled in the conversion
+    if (!serializedArguments) {
+        return;
+    }
+
     // for some reason there needs to be "M91" appended to the very first movement
+    // TODO: do this on the model level
     const firstMovementM91 = lineNumber == 1 ? "M91" : "";
 
     return [`N${lineNumber}`, command.commandType, serializedArguments, firstMovementM91]
@@ -38,11 +45,16 @@ export function* serializePt5(model: Pt5File): Generator<string> {
             case Pt5CommandTypes.MOVE:
             case Pt5CommandTypes.CLOCKWISE_CIRCLE:
             case Pt5CommandTypes.COUNTER_CLOCKWISE_CIRCLE:
-                if (lastLine) {
-                    yield lastLine;
+                {
+                    const serialized = serializeCommand(lineNumber, command);
+                    if (serialized) {
+                        if (lastLine) {
+                            yield lastLine;
+                        }
+                        lastLine = serialized;
+                        lineNumber++;
+                    }
                 }
-                lastLine = serializeCommand(lineNumber, command);
-                lineNumber++;
                 break;
             case Pt5CommandTypes.STOP:
             case Pt5CommandTypes.STOP_AND_REWIND:
