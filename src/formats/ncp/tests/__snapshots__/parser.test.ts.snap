@@ -1,0 +1,122 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`parseNcp > should parse simple file 1`] = `
+{
+  "commands": [
+    {
+      "args": {},
+      "commandType": "G90",
+    },
+    {
+      "args": {
+        "F": 1000,
+        "X": -1,
+        "Y": 0,
+      },
+      "commandType": "G01",
+    },
+    {
+      "args": {
+        "Y": -5,
+      },
+      "commandType": "G01",
+    },
+    {
+      "args": {
+        "J": -2,
+        "X": -4,
+        "Y": -1,
+      },
+      "commandType": "G02",
+    },
+    {
+      "args": {
+        "X": -5,
+        "Y": -2,
+      },
+      "commandType": "G01",
+    },
+    {
+      "args": {
+        "I": 1,
+        "J": 3,
+        "X": -1,
+        "Y": 0,
+      },
+      "commandType": "G03",
+    },
+    {
+      "args": {},
+      "commandType": "M30",
+    },
+  ],
+}
+`;
+
+exports[`parseNcp > should parse switching_modes file 1`] = `
+{
+  "commands": [
+    {
+      "args": {},
+      "commandType": "G90",
+    },
+    {
+      "args": {
+        "F": 1000,
+        "X": -1,
+        "Y": 0,
+      },
+      "commandType": "G01",
+    },
+    {
+      "args": {
+        "Y": -5,
+      },
+      "commandType": "G01",
+    },
+    {
+      "args": {
+        "J": -2,
+        "X": -4,
+        "Y": -1,
+      },
+      "commandType": "G02",
+    },
+    {
+      "args": {},
+      "commandType": "G91",
+    },
+    {
+      "args": {
+        "X": -2,
+        "Y": 1,
+      },
+      "commandType": "G01",
+    },
+    {
+      "args": {
+        "I": 0,
+        "J": 2,
+        "X": 3,
+        "Y": 3,
+      },
+      "commandType": "G03",
+    },
+    {
+      "args": {},
+      "commandType": "G90",
+    },
+    {
+      "args": {
+        "X": -1,
+        "Y": 0,
+      },
+      "commandType": "G01",
+    },
+    {
+      "args": {},
+      "commandType": "M30",
+    },
+  ],
+}
+`;

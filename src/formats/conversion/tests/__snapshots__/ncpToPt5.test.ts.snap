@@ -1,0 +1,33 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`npcToPt5 > should convert simple file in absolute mode 1`] = `
+{
+  "commands": [
+    {
+      "args": {
+        "X": 2000,
+        "Y": 3000,
+      },
+      "commandType": "G01",
+    },
+    {
+      "args": {
+        "X": 3000,
+        "Y": 5000,
+      },
+      "commandType": "G01",
+    },
+    {
+      "args": {
+        "I": 1500,
+        "X": 3000,
+      },
+      "commandType": "G02",
+    },
+    {
+      "args": {},
+      "commandType": "M02",
+    },
+  ],
+}
+`;
