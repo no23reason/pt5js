@@ -7,8 +7,10 @@ function App() {
     return (
         <>
             <FilePicker />
-            <NcpPreview />
-            <Pt5Preview />
+            <div className="previews-container">
+                <NcpPreview />
+                <Pt5Preview />
+            </div>
         </>
     );
 }

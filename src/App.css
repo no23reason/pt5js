@@ -3,3 +3,13 @@
     margin: 0 auto;
     padding: 2rem;
 }
+
+.previews-container {
+    display: flex;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.previews-container > * {
+    flex: 1;
+}
