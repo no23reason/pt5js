@@ -133,3 +133,6 @@ dist
 # IntelliJ
 .idea/
 /.idea/
+
+# macOS
+.DS_STORE

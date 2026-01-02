@@ -1,8 +1,14 @@
 import type { FC } from "react";
 import { useAppState } from "../hooks/useAppState.ts";
+import { CodePreviewBlock } from "./CodePreviewBlock.tsx";
 
 export const NcpPreview: FC = () => {
-    const ncpFile = useAppState((state) => state.ncpFile);
+    const ncpLines = useAppState((state) => state.ncpLines);
 
-    return <pre>{ncpFile}</pre>;
+    return (
+        <div>
+            <h2>NCP</h2>
+            <CodePreviewBlock lines={ncpLines} />
+        </div>
+    );
 };

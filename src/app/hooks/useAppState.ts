@@ -1,11 +1,11 @@
 import { create } from "zustand";
 
 export interface AppState {
-    ncpFile: string;
-    setNcpFile: (newNcpFile: string) => void;
+    ncpLines: string[];
+    setNcpLines: (newNcpLines: string[]) => void;
 }
 
 export const useAppState = create<AppState>((set) => ({
-    ncpFile: "",
-    setNcpFile: (newNcpFile: string) => set({ ncpFile: newNcpFile }),
+    ncpLines: [],
+    setNcpLines: (newNcpLines: string[]) => set({ ncpLines: newNcpLines }),
 }));

@@ -1,0 +1,11 @@
+.code-preview-block {
+    background: #f7f7fa;
+    border: 1px solid darkgray;
+    border-radius: 8px;
+    color: #000;
+    padding: 1em;
+    overflow-x: auto;
+    font-family: monospace;
+    font-size: 1em;
+    margin: 0;
+}

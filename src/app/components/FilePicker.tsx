@@ -2,7 +2,7 @@ import type { FC, FormEvent } from "react";
 import { useAppState } from "../hooks/useAppState.ts";
 
 export const FilePicker: FC = () => {
-    const setNcpFile = useAppState((state) => state.setNcpFile);
+    const setNcpLines = useAppState((state) => state.setNcpLines);
 
     const onInput = async (e: FormEvent<HTMLInputElement>) => {
         const file = e.currentTarget.files?.item(0);
@@ -12,12 +12,12 @@ export const FilePicker: FC = () => {
             return;
         }
 
-        setNcpFile(content);
+        setNcpLines(content.split("\n"));
     };
 
     return (
         <div>
-            <input type="file" onInput={onInput} />
+            <input type="file" onInput={onInput} accept=".ncp" />
         </div>
     );
 };

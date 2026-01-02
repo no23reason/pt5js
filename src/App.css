@@ -13,3 +13,9 @@
 .previews-container > * {
     flex: 1;
 }
+
+.controls-container {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
