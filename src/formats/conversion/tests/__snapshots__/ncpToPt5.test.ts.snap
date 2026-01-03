@@ -5,6 +5,7 @@ exports[`npcToPt5 > should convert simple file in absolute mode 1`] = `
   "commands": [
     {
       "args": {
+        "M": 91,
         "X": 2000,
         "Y": 3000,
       },

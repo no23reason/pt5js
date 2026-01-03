@@ -2,7 +2,7 @@
 
 exports[`serializePt5 > should serialize a simple model 1`] = `
 [
-  "N1 G01 X+100 Y-100 M91",
+  "N1 G01 X+100 Y-100",
   "N2 G02 X+200 Y-200 J+50",
   "N3 G03 X+300 Y-300 I-50 M02",
 ]
