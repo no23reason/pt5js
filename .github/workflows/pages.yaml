@@ -17,6 +17,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
       - name: Checkout
         uses: actions/checkout@v6
       - name: Setup Node
