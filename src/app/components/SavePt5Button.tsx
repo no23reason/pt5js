@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { FormattedMessage } from "react-intl";
 import { useConvertedPt5 } from "../hooks/useConvertedPt5.ts";
 
 export const SavePt5Button: FC = () => {
@@ -22,8 +23,7 @@ export const SavePt5Button: FC = () => {
 
     return (
         <button disabled={!serialized.length} onClick={handleSave}>
-            Save .pt5
+            <FormattedMessage defaultMessage="Save .pt5" id="savePt5Button.savePt5" />
         </button>
     );
 };
-

@@ -1,6 +1,7 @@
 import type { FC, FormEvent } from "react";
 import { useRef } from "react";
 import { useAppState } from "../hooks/useAppState.ts";
+import { FormattedMessage } from "react-intl";
 
 export const FilePicker: FC = () => {
     const setNcpLines = useAppState((state) => state.setNcpLines);
@@ -30,7 +31,9 @@ export const FilePicker: FC = () => {
                 accept=".ncp"
                 style={{ display: "none" }}
             />
-            <button onClick={handleClick}>Load .ncp</button>
+            <button onClick={handleClick}>
+                <FormattedMessage defaultMessage="Load .ncp" id="filePicker.loadNcp" />
+            </button>
         </>
     );
 };
