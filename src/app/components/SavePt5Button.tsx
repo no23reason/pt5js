@@ -1,9 +1,11 @@
 import type { FC } from "react";
 import { FormattedMessage } from "react-intl";
 import { useConvertedPt5 } from "../hooks/useConvertedPt5.ts";
+import { useAppState } from "../hooks/useAppState.ts";
 
 export const SavePt5Button: FC = () => {
     const serialized = useConvertedPt5();
+    const ncpFileName = useAppState((state) => state.ncpFileName);
 
     const handleSave = () => {
         const content = serialized.join("\r\n");
@@ -12,7 +14,7 @@ export const SavePt5Button: FC = () => {
 
         const a = document.createElement("a");
         a.href = url;
-        a.download = "output.pt5";
+        a.download = `${ncpFileName.split(".", 1)[0]}.pt5`;
         document.body.appendChild(a);
         a.click();
         setTimeout(() => {

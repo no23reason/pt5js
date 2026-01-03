@@ -4,7 +4,7 @@ import { useAppState } from "../hooks/useAppState.ts";
 import { FormattedMessage } from "react-intl";
 
 export const FilePicker: FC = () => {
-    const setNcpLines = useAppState((state) => state.setNcpLines);
+    const setNcpFile = useAppState((state) => state.setNcpFile);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const onInput = async (e: FormEvent<HTMLInputElement>) => {
@@ -15,7 +15,7 @@ export const FilePicker: FC = () => {
             return;
         }
 
-        setNcpLines(content.split("\n"));
+        setNcpFile(file?.name ?? "file.ncp", content.split("\n"));
     };
 
     const handleClick = () => {
