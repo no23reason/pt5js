@@ -6,6 +6,7 @@ import { NcpPreview } from "./app/components/NcpPreview.tsx";
 import { Pt5Preview } from "./app/components/Pt5Preview.tsx";
 import { useAppState } from "./app/hooks/useAppState.ts";
 import { IntlProvider } from "react-intl";
+import { DrawingPreview } from "./app/components/DrawingPreview.tsx";
 
 interface AppProps {
     messages: Record<string, string>;
@@ -24,6 +25,7 @@ export const App: FC<AppProps> = ({ messages, locale }) => {
                 <div className="previews-container">
                     <NcpPreview />
                     <Pt5Preview />
+                    <DrawingPreview />
                 </div>
             )}
         </IntlProvider>

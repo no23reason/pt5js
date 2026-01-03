@@ -1,0 +1,8 @@
+.drawing-preview-canvas {
+    background-color: #f7f7fa;
+    border: 1px solid darkgray;
+    border-radius: 8px;
+    display: block;
+    margin: 0;
+    padding: 10px;
+}
