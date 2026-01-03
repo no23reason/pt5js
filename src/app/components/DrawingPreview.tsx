@@ -25,16 +25,20 @@ export const DrawingPreview: FC = () => {
         ctx.reset();
         ctx.clearRect(0, 0, width, height);
 
+        const padding = 10;
+        const availableWidth = width - padding * 2;
+        const availableHeight = height - padding * 2;
+
         const scale = Math.min(
-            width / (drawing.boundingBox.maxX - drawing.boundingBox.minX),
-            height / (drawing.boundingBox.maxY - drawing.boundingBox.minY),
+            availableWidth / (drawing.boundingBox.maxX - drawing.boundingBox.minX),
+            availableHeight / (drawing.boundingBox.maxY - drawing.boundingBox.minY),
         );
         ctx.scale(scale, scale);
 
         const scaledWidth = (drawing.boundingBox.maxX - drawing.boundingBox.minX) * scale;
         const scaledHeight = (drawing.boundingBox.maxY - drawing.boundingBox.minY) * scale;
-        const offsetX = (width - scaledWidth) / (2 * scale);
-        const offsetY = (height - scaledHeight) / (2 * scale);
+        const offsetX = (availableWidth - scaledWidth) / (2 * scale) + padding / scale;
+        const offsetY = (availableHeight - scaledHeight) / (2 * scale) + padding / scale;
 
         ctx.translate(-drawing.boundingBox.minX + offsetX, -drawing.boundingBox.minY + offsetY);
 
