@@ -1,9 +1,9 @@
 import type { FC } from "react";
 import { CodePreviewBlock } from "./CodePreviewBlock.tsx";
-import { useConvertedPt5 } from "../hooks/useConvertedPt5.ts";
+import { useSerializedPt5 } from "../hooks/useSerializedPt5.ts";
 
 export const Pt5Preview: FC = () => {
-    const serialized = useConvertedPt5();
+    const serialized = useSerializedPt5();
 
     return (
         <div>
