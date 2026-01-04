@@ -59,11 +59,20 @@ function drawSegment(ctx: CanvasRenderingContext2D, segment: Segment) {
     }
 }
 
-function drawDrawing(ctx: CanvasRenderingContext2D, drawing: Drawing, canvasWidth: number, canvasHeight: number) {
+function drawDrawing(
+    ctx: CanvasRenderingContext2D,
+    drawing: Drawing,
+    canvasWidth: number,
+    canvasHeight: number,
+) {
     ctx.reset();
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
-    const { scale, offsetX, offsetY } = calculateScaleAndOffset(canvasWidth, canvasHeight, drawing.boundingBox);
+    const { scale, offsetX, offsetY } = calculateScaleAndOffset(
+        canvasWidth,
+        canvasHeight,
+        drawing.boundingBox,
+    );
 
     // Set up coordinate system: scale first, then translate
     ctx.scale(scale, scale);
@@ -99,8 +108,9 @@ export const DrawingPreview: FC = () => {
 
     return (
         <div>
-            <FormattedMessage defaultMessage="Preview" id="drawingPreview.preview" tagName="h2" />
+            <FormattedMessage id="drawingPreview.preview" tagName="h2" />
             <canvas className="drawing-preview-canvas" ref={canvasRef} width={600} height={600} />
+            <FormattedMessage id="drawingPreview.previewDisclaimer" />
         </div>
     );
 };

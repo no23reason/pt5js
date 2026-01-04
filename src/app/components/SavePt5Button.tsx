@@ -25,7 +25,7 @@ export const SavePt5Button: FC = () => {
 
     return (
         <button disabled={!serialized.length} onClick={handleSave}>
-            <FormattedMessage defaultMessage="Save .pt5" id="savePt5Button.savePt5" />
+            <FormattedMessage id="savePt5Button.savePt5" />
         </button>
     );
 };

@@ -1,5 +1,6 @@
 {
   "filePicker.loadNcp": "Load .ncp",
   "savePt5Button.savePt5": "Save .pt5",
-  "drawingPreview.preview": "Preview"
+  "drawingPreview.preview": "Preview",
+  "drawingPreview.previewDisclaimer": "The preview may not be accurate with what the machine will actually draw, always double check the drawing on the machine itself."
 }
