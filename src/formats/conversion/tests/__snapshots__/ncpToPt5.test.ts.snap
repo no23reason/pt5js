@@ -20,7 +20,7 @@ exports[`npcToPt5 > should convert simple file in absolute mode 1`] = `
     },
     {
       "args": {
-        "I": 1500,
+        "I": -1500,
         "X": 3000,
       },
       "commandType": "G02",
