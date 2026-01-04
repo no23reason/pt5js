@@ -74,7 +74,13 @@ function drawDrawing(
         drawing.boundingBox,
     );
 
-    // Set up coordinate system: scale first, then translate
+    // Set up coordinate system:
+    // 1. Translate to bottom of canvas (flip Y origin from top-left to bottom-left)
+    // 2. Scale Y by -1 to flip Y axis (drawing has Y=0 at bottom, canvas has Y=0 at top)
+    // 3. Apply uniform scale
+    // 4. Translate to position the drawing
+    ctx.translate(0, canvasHeight);
+    ctx.scale(1, -1);
     ctx.scale(scale, scale);
     ctx.translate(-drawing.boundingBox.minX + offsetX / scale, -drawing.boundingBox.minY + offsetY / scale);
 
