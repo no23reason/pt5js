@@ -1,5 +1,6 @@
 import { type FC, type RefObject, useEffect, useRef, useState } from "react";
 import { useConvertedPt5 } from "../hooks/useConvertedPt5.ts";
+import { useAnimation } from "../hooks/useAnimation.ts";
 import { pt5ToDrawing } from "../../formats/conversion/pt5ToDrawing.ts";
 import type { Drawing, Segment } from "../../formats/drawing/model.ts";
 import "./DrawingPreview.css";
@@ -194,13 +195,13 @@ function drawDrawing(
 export const DrawingPreview: FC = () => {
     const convertedPt5 = useConvertedPt5();
     const canvasRef: RefObject<HTMLCanvasElement | null> = useRef(null);
-    const [isPlaying, setIsPlaying] = useState(false);
-    const [animationProgress, setAnimationProgress] = useState(0);
     const [animationSpeed, setAnimationSpeed] = useState(1);
-    const animationRef = useRef<number | null>(null);
-    const startTimeRef = useRef<number | null>(null);
-    const initialProgressRef = useRef<number>(0);
     const previousPt5Ref = useRef<typeof convertedPt5>(null);
+
+    const { isPlaying, progress, toggle, reset } = useAnimation({
+        duration: DEFAULT_ANIMATION_DURATION,
+        speed: animationSpeed,
+    });
 
     useEffect(() => {
         if (!canvasRef.current || !convertedPt5) {
@@ -213,81 +214,24 @@ export const DrawingPreview: FC = () => {
         }
 
         const drawing = pt5ToDrawing(convertedPt5);
-        drawDrawing(ctx, drawing, canvasRef.current.width, canvasRef.current.height, animationProgress);
-    }, [convertedPt5, animationProgress]);
+        drawDrawing(ctx, drawing, canvasRef.current.width, canvasRef.current.height, progress);
+    }, [convertedPt5, progress]);
 
     // Auto-play animation when a new file is loaded
     useEffect(() => {
         if (convertedPt5 && convertedPt5 !== previousPt5Ref.current) {
             previousPt5Ref.current = convertedPt5;
-            // Use setTimeout to defer state updates and avoid linter warning
-            setTimeout(() => {
-                setAnimationProgress(0);
-                initialProgressRef.current = 0;
-                startTimeRef.current = null;
-                setIsPlaying(true);
-            }, 0);
+            reset();
+            setTimeout(() => toggle(), 0);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [convertedPt5]);
-
-    useEffect(() => {
-        if (isPlaying) {
-            const animate = (timestamp: number) => {
-                if (startTimeRef.current === null) {
-                    startTimeRef.current = timestamp;
-                }
-
-                const elapsed = (timestamp - startTimeRef.current) * animationSpeed;
-                const duration = DEFAULT_ANIMATION_DURATION;
-                const newProgress = Math.min(1, initialProgressRef.current + elapsed / duration);
-
-                setAnimationProgress(newProgress);
-
-                if (newProgress < 1) {
-                    animationRef.current = requestAnimationFrame(animate);
-                } else {
-                    setIsPlaying(false);
-                    startTimeRef.current = null;
-                }
-            };
-
-            animationRef.current = requestAnimationFrame(animate);
-        } else {
-            if (animationRef.current !== null) {
-                cancelAnimationFrame(animationRef.current);
-                animationRef.current = null;
-            }
-            startTimeRef.current = null;
-        }
-
-        return () => {
-            if (animationRef.current !== null) {
-                cancelAnimationFrame(animationRef.current);
-            }
-        };
-    }, [isPlaying, animationSpeed]);
-
-    const handlePlayPause = () => {
-        if (isPlaying) {
-            setIsPlaying(false);
-        } else {
-            if (animationProgress >= 1) {
-                // Reset if at the end
-                setAnimationProgress(0);
-                initialProgressRef.current = 0;
-            } else {
-                initialProgressRef.current = animationProgress;
-            }
-            startTimeRef.current = null;
-            setIsPlaying(true);
-        }
-    };
 
     return (
         <div>
             <FormattedMessage id="drawingPreview.preview" tagName="h2" />
             <div className="drawing-preview-controls">
-                <button onClick={handlePlayPause}>
+                <button onClick={toggle}>
                     {isPlaying ? (
                         <FormattedMessage id="drawingPreview.pause" />
                     ) : (
