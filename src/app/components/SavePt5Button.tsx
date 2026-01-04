@@ -1,10 +1,10 @@
 import type { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import { useConvertedPt5 } from "../hooks/useConvertedPt5.ts";
+import { useSerializedPt5 } from "../hooks/useSerializedPt5.ts";
 import { useAppState } from "../hooks/useAppState.ts";
 
 export const SavePt5Button: FC = () => {
-    const serialized = useConvertedPt5();
+    const serialized = useSerializedPt5();
     const ncpFileName = useAppState((state) => state.ncpFileName);
 
     const handleSave = () => {
@@ -25,7 +25,7 @@ export const SavePt5Button: FC = () => {
 
     return (
         <button disabled={!serialized.length} onClick={handleSave}>
-            <FormattedMessage defaultMessage="Save .pt5" id="savePt5Button.savePt5" />
+            <FormattedMessage id="savePt5Button.savePt5" />
         </button>
     );
 };

@@ -32,7 +32,7 @@ export const FilePicker: FC = () => {
                 style={{ display: "none" }}
             />
             <button onClick={handleClick}>
-                <FormattedMessage defaultMessage="Load .ncp" id="filePicker.loadNcp" />
+                <FormattedMessage id="filePicker.loadNcp" />
             </button>
         </>
     );

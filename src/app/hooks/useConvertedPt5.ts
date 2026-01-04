@@ -1,11 +1,10 @@
 import { useAppState } from "./useAppState.ts";
 import { ncpToPt5 } from "../../formats/conversion/ncpToPt5.ts";
 import { parseNcp } from "../../formats/ncp/parser.ts";
-import { serializePt5 } from "../../formats/pt5/serializer.ts";
+import type { Pt5File } from "../../formats/pt5/model.ts";
 
-export const useConvertedPt5 = () => {
+export const useConvertedPt5 = (): Pt5File | undefined => {
     const ncpLines = useAppState((state) => state.ncpLines);
     const parsed = ncpLines.length > 0 ? parseNcp(ncpLines) : undefined;
-    const converted = parsed && ncpToPt5(parsed);
-    return converted ? [...serializePt5(converted)] : [];
+    return parsed && ncpToPt5(parsed);
 };
