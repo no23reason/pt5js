@@ -4,9 +4,17 @@ export interface LineTo {
     y: number;
 }
 
-// TODO arc/ellipsis
+export interface Arc {
+    type: "arc";
+    x: number;
+    y: number;
+    radius: number;
+    startAngle: number;
+    endAngle: number;
+    counterClockwise: boolean;
+}
 
-export type Segment = LineTo;
+export type Segment = LineTo | Arc;
 
 export interface Drawing {
     segments: Segment[];

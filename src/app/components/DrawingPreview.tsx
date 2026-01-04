@@ -48,6 +48,19 @@ export const DrawingPreview: FC = () => {
             switch (segment.type) {
                 case "line":
                     ctx.lineTo(segment.x, segment.y);
+                    break;
+                case "arc":
+                    ctx.ellipse(
+                        segment.x,
+                        segment.y,
+                        segment.radius,
+                        segment.radius,
+                        0,
+                        segment.startAngle,
+                        segment.endAngle,
+                        segment.counterClockwise,
+                    );
+                    break;
             }
         }
         ctx.stroke();
