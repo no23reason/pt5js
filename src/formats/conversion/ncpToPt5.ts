@@ -77,19 +77,28 @@ class NcpToPt5Conversion {
                 currentY = this.y ?? currentY;
 
                 const args: Pt5Command["args"] = {};
-                if (deltaX != undefined) {
-                    args["X"] = millimetersToMicrometers(deltaX);
-                }
-                if (deltaY != undefined) {
-                    args["Y"] = millimetersToMicrometers(deltaY);
-                }
 
                 if (this.motion === 1) {
+                    if (deltaX != undefined) {
+                        args["X"] = millimetersToMicrometers(deltaX);
+                    }
+                    if (deltaY != undefined) {
+                        args["Y"] = millimetersToMicrometers(deltaY);
+                    }
+
                     commands.push({
                         commandType: Pt5CommandTypes.MOVE,
                         args,
                     });
                 } else if (this.motion === 2 || this.motion === 3) {
+                    // For some reason, PT5 subtracts the I and J from the new X and Y.
+                    // If that leaves them zero, only I or J is emitted.
+                    if (deltaX != undefined) {
+                        args["X"] = millimetersToMicrometers(deltaX - this.i);
+                    }
+                    if (deltaY != undefined) {
+                        args["Y"] = millimetersToMicrometers(deltaY - this.j);
+                    }
                     // When testing on a real machine, it turns out that for I and J parameters it
                     // expects them with the inverse sign compared to NCP. I have no idea why,
                     // but since the main purpose is to make the machine happy, let's try this.
