@@ -90,11 +90,14 @@ class NcpToPt5Conversion {
                         args,
                     });
                 } else if (this.motion === 2 || this.motion === 3) {
+                    // When testing on a real machine, it turns out that for I and J parameters it
+                    // expects them with the inverse sign compared to NCP. I have no idea why,
+                    // but since the main purpose is to make the machine happy, let's try this.
                     if (this.i !== 0) {
-                        args["I"] = millimetersToMicrometers(this.i);
+                        args["I"] = -millimetersToMicrometers(this.i);
                     }
                     if (this.j !== 0) {
-                        args["J"] = millimetersToMicrometers(this.j);
+                        args["J"] = -millimetersToMicrometers(this.j);
                     }
                     commands.push({
                         commandType:
