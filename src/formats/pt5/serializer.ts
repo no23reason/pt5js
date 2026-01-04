@@ -32,6 +32,10 @@ function serializeCommand(lineNumber: number, command: Pt5Command): string | und
 export function* serializePt5(model: Pt5File): Generator<string> {
     let lineNumber = 1;
     let lastLine: string | undefined = undefined;
+
+    // each file needs a preamble, this is empty for now, but the separator line needs to be there anyway
+    yield "%";
+
     for (const command of model.commands) {
         switch (command.commandType) {
             case Pt5CommandTypes.MOVE:
