@@ -41,13 +41,15 @@ export function pt5ToDrawing(pt5: Pt5File): Drawing {
                     const j = command.args["J"] ?? 0;
 
                     // Notice the minus, in normal G-code the I and J are added to X and Y respectively,
-                    // in the PT5 they need to be subtracted as they appear wit the opposite sign.
+                    // in the PT5 they need to be subtracted as they appear with the opposite sign.
                     // See also the note next to handling this in the ncpToPt5 converter.
                     const centerX = currentX - i;
                     const centerY = currentY - j;
 
-                    const newX = currentX + deltaX;
-                    const newY = currentY + deltaY;
+                    // Again, in contrast to normal G-code, the deltaX and deltaY come with the I and J
+                    // effectively added so get rid of them.
+                    const newX = currentX + deltaX - i;
+                    const newY = currentY + deltaY - j;
 
                     const radius = Math.hypot(i, j);
 
