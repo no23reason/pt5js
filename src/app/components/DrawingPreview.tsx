@@ -1,6 +1,7 @@
 import { type FC, type RefObject, useEffect, useRef, useState } from "react";
 import { useConvertedPt5 } from "../hooks/useConvertedPt5.ts";
 import { useAnimation } from "../hooks/useAnimation.ts";
+import { useAppState } from "../hooks/useAppState.ts";
 import { pt5ToDrawing } from "../../formats/conversion/pt5ToDrawing.ts";
 import type { Drawing, Segment } from "../../formats/drawing/model.ts";
 import "./DrawingPreview.css";
@@ -194,9 +195,10 @@ function drawDrawing(
 
 export const DrawingPreview: FC = () => {
     const convertedPt5 = useConvertedPt5();
+    const ncpLoadCount = useAppState((state) => state.ncpLoadCount);
     const canvasRef: RefObject<HTMLCanvasElement | null> = useRef(null);
     const [animationSpeed, setAnimationSpeed] = useState(1);
-    const previousPt5Ref = useRef<typeof convertedPt5>(null);
+    const previousLoadCountRef = useRef(0);
 
     const { isPlaying, progress, toggle, reset } = useAnimation({
         duration: DEFAULT_ANIMATION_DURATION,
@@ -217,15 +219,15 @@ export const DrawingPreview: FC = () => {
         drawDrawing(ctx, drawing, canvasRef.current.width, canvasRef.current.height, progress);
     }, [convertedPt5, progress]);
 
-    // Auto-play animation when a new file is loaded
+    // Auto-play animation when a new NCP file is loaded
     useEffect(() => {
-        if (convertedPt5 && convertedPt5 !== previousPt5Ref.current) {
-            previousPt5Ref.current = convertedPt5;
+        if (ncpLoadCount > 0 && ncpLoadCount !== previousLoadCountRef.current) {
+            previousLoadCountRef.current = ncpLoadCount;
             reset();
             setTimeout(() => toggle(), 0);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [convertedPt5]);
+    }, [ncpLoadCount]);
 
     return (
         <div>

@@ -1,20 +1,19 @@
 import type { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import { useSerializedPt5 } from "../hooks/useSerializedPt5.ts";
 import { useAppState } from "../hooks/useAppState.ts";
 
 export const SavePt5Button: FC = () => {
-    const serialized = useSerializedPt5();
+    const pt5Text = useAppState((state) => state.pt5Text);
     const ncpFileName = useAppState((state) => state.ncpFileName);
 
     const handleSave = () => {
-        const content = serialized.join("\r\n");
+        const content = pt5Text.split("\n").join("\r\n");
         const blob = new Blob([content], { type: "text/plain" });
         const url = URL.createObjectURL(blob);
 
         const a = document.createElement("a");
         a.href = url;
-        a.download = `${ncpFileName.split(".", 1)[0]}.pt5`;
+        a.download = ncpFileName ? `${ncpFileName.split(".", 1)[0]}.pt5` : "output.pt5";
         document.body.appendChild(a);
         a.click();
         setTimeout(() => {
@@ -24,7 +23,7 @@ export const SavePt5Button: FC = () => {
     };
 
     return (
-        <button disabled={!serialized.length} onClick={handleSave}>
+        <button disabled={!pt5Text} onClick={handleSave}>
             <FormattedMessage id="savePt5Button.savePt5" />
         </button>
     );

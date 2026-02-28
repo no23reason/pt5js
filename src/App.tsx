@@ -15,19 +15,18 @@ interface AppProps {
 
 export const App: FC<AppProps> = ({ messages, locale }) => {
     const ncpLines = useAppState((state) => state.ncpLines);
+    const pt5Text = useAppState((state) => state.pt5Text);
     return (
         <IntlProvider messages={messages} locale={locale}>
             <div className="controls-container">
                 <FilePicker />
                 <SavePt5Button />
             </div>
-            {ncpLines?.length > 0 && (
-                <div className="previews-container">
-                    <NcpPreview />
-                    <Pt5Preview />
-                    <DrawingPreview />
-                </div>
-            )}
+            <div className="previews-container">
+                {ncpLines?.length > 0 && <NcpPreview />}
+                <Pt5Preview />
+                {pt5Text && <DrawingPreview />}
+            </div>
         </IntlProvider>
     );
 };
