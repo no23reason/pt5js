@@ -1,6 +1,40 @@
 import { Pt5CommandTypes, type Pt5File } from "../pt5/model.ts";
 import type { Drawing, Segment } from "../drawing/model.ts";
 
+const TAU = 2 * Math.PI;
+const normalize = (a: number) => ((a % TAU) + TAU) % TAU;
+
+/**
+ * Returns true if the given angle lies on the arc swept from startAngle to endAngle.
+ * counterClockwise=true means the arc goes in the direction of increasing angle (CCW in math space).
+ */
+function isAngleInArc(angle: number, startAngle: number, endAngle: number, counterClockwise: boolean): boolean {
+    const s = normalize(startAngle);
+    const e = normalize(endAngle);
+    const a = normalize(angle);
+    if (counterClockwise) {
+        return s <= e ? a >= s && a <= e : a >= s || a <= e;
+    } else {
+        return s >= e ? a <= s && a >= e : a <= s || a >= e;
+    }
+}
+
+function expandBBoxForArc(
+    minX: number, minY: number, maxX: number, maxY: number,
+    cx: number, cy: number, radius: number,
+    startAngle: number, endAngle: number, counterClockwise: boolean,
+): [number, number, number, number] {
+    for (const angle of [0, Math.PI / 2, Math.PI, 3 * Math.PI / 2]) {
+        if (isAngleInArc(angle, startAngle, endAngle, counterClockwise)) {
+            minX = Math.min(minX, cx + radius * Math.cos(angle));
+            minY = Math.min(minY, cy + radius * Math.sin(angle));
+            maxX = Math.max(maxX, cx + radius * Math.cos(angle));
+            maxY = Math.max(maxY, cy + radius * Math.sin(angle));
+        }
+    }
+    return [minX, minY, maxX, maxY];
+}
+
 export function pt5ToDrawing(pt5: Pt5File): Drawing {
     const segments: Segment[] = [];
 
@@ -53,8 +87,12 @@ export function pt5ToDrawing(pt5: Pt5File): Drawing {
 
                     const radius = Math.hypot(i, j);
 
-                    const angleFromCenterToStart = Math.atan2(j, i) % (2 * Math.PI);
-                    const angleFromCenterToEnd = Math.atan2(newY - centerY, newX - centerX) % (2 * Math.PI);
+                    const angleFromCenterToStart = Math.atan2(j, i) % TAU;
+                    const angleFromCenterToEnd = Math.atan2(newY - centerY, newX - centerX) % TAU;
+
+                    // For some reason this needs to be like this, not COUNTER_CLOCKWISE_CIRCLE.
+                    // I have no idea why at the moment.
+                    const counterClockwise = command.commandType === Pt5CommandTypes.CLOCKWISE_CIRCLE;
 
                     segments.push({
                         type: "arc",
@@ -63,9 +101,7 @@ export function pt5ToDrawing(pt5: Pt5File): Drawing {
                         radius,
                         startAngle: angleFromCenterToStart,
                         endAngle: angleFromCenterToEnd,
-                        // For some reason this needs to be like this, not COUNTER_CLOCKWISE_CIRCLE.
-                        // I have no idea why at the moment.
-                        counterClockwise: command.commandType === Pt5CommandTypes.CLOCKWISE_CIRCLE,
+                        counterClockwise,
                     });
 
                     currentX = newX;
@@ -74,6 +110,13 @@ export function pt5ToDrawing(pt5: Pt5File): Drawing {
                     minY = Math.min(minY, newY);
                     maxX = Math.max(maxX, newX);
                     maxY = Math.max(maxY, newY);
+
+                    // Expand bounding box to include any cardinal extremes the arc sweeps through
+                    [minX, minY, maxX, maxY] = expandBBoxForArc(
+                        minX, minY, maxX, maxY,
+                        centerX, centerY, radius,
+                        angleFromCenterToStart, angleFromCenterToEnd, counterClockwise,
+                    );
                 }
                 break;
         }
