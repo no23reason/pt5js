@@ -5,5 +5,7 @@
     "drawingPreview.previewDisclaimer": "Náhled může být nepřesný vzhledem k tomu, co bude stroj skutečně kreslit, vždy si ověřte kreslení na stroji samotném.",
     "drawingPreview.play": "Přehrát",
     "drawingPreview.pause": "Pozastavit",
-    "drawingPreview.speed": "Rychlost"
+    "drawingPreview.speed": "Rychlost",
+    "ncpPreview.show": "Zobrazit NCP",
+    "ncpPreview.hide": "Skrýt NCP"
 }

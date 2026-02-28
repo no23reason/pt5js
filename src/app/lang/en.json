@@ -5,5 +5,7 @@
   "drawingPreview.previewDisclaimer": "The preview may not be accurate with what the machine will actually draw, always double check the drawing on the machine itself.",
   "drawingPreview.play": "Play",
   "drawingPreview.pause": "Pause",
-  "drawingPreview.speed": "Speed"
+  "drawingPreview.speed": "Speed",
+  "ncpPreview.show": "Show NCP",
+  "ncpPreview.hide": "Hide NCP"
 }
