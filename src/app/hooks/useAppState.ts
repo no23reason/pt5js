@@ -21,7 +21,15 @@ export const useAppState = create<AppState>((set) => ({
         const parsed = parseNcp(lines);
         const converted = ncpToPt5(parsed);
         const pt5Text = [...serializePt5(converted)]
-            .map((line) => line.replace(/^N\d+\s+/, ""))
+            .filter((line) => line !== "%")
+            .map((line) =>
+                line
+                    .replace(/^N\d+\s+/, "")          // strip line number
+                    .replace(/\s+M91/, "")             // strip M91 pseudo-arg
+                    .replace(/\s+(M00|M02|M30)$/, "")  // strip trailing stop command
+                    .trim(),
+            )
+            .filter(Boolean)
             .join("\n");
         set((state) => ({
             ncpLines: lines,
