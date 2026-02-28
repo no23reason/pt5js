@@ -20,7 +20,9 @@ export const useAppState = create<AppState>((set) => ({
     setNcpFile: (name: string, lines: string[]) => {
         const parsed = parseNcp(lines);
         const converted = ncpToPt5(parsed);
-        const pt5Text = [...serializePt5(converted)].join("\n");
+        const pt5Text = [...serializePt5(converted)]
+            .map((line) => line.replace(/^N\d+\s+/, ""))
+            .join("\n");
         set((state) => ({
             ncpLines: lines,
             ncpFileName: name,

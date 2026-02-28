@@ -1,0 +1,37 @@
+.pt5-editor-wrapper {
+    display: flex;
+    border: 1px solid darkgray;
+    border-radius: 8px;
+    overflow: hidden;
+    font-family: monospace;
+    font-size: 1em;
+    min-height: 300px;
+    resize: vertical;
+}
+
+.pt5-editor-gutter {
+    padding: 1em 0.75em;
+    margin: 0;
+    color: #999;
+    text-align: right;
+    user-select: none;
+    overflow: hidden;
+    white-space: pre;
+    line-height: 1.5;
+    background: #eeeff2;
+    border-right: 1px solid darkgray;
+}
+
+.pt5-editor-textarea {
+    flex: 1;
+    background: #f7f7fa;
+    border: none;
+    outline: none;
+    padding: 1em;
+    font-family: monospace;
+    font-size: 1em;
+    line-height: 1.5;
+    color: #000;
+    resize: none;
+    min-height: 0;
+}

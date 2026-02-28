@@ -7,7 +7,11 @@ export const SavePt5Button: FC = () => {
     const ncpFileName = useAppState((state) => state.ncpFileName);
 
     const handleSave = () => {
-        const content = pt5Text.split("\n").join("\r\n");
+        let lineNum = 1;
+        const content = pt5Text
+            .split("\n")
+            .map((line) => (/^G0[123]/.test(line.trim()) ? `N${lineNum++} ${line.trim()}` : line))
+            .join("\r\n");
         const blob = new Blob([content], { type: "text/plain" });
         const url = URL.createObjectURL(blob);
 
