@@ -7,5 +7,12 @@
     "drawingPreview.pause": "Pozastavit",
     "drawingPreview.speed": "Rychlost",
     "ncpPreview.show": "Zobrazit NCP",
-    "ncpPreview.hide": "Skrýt NCP"
+    "ncpPreview.hide": "Skrýt NCP",
+    "hints.title": "PT5 tahák",
+    "hints.ex": "Příklady",
+    "hints.g01": "Rovná čára",
+    "hints.g01.ex1": "Vodorovná čára doprava",
+    "hints.g01.ex2": "Svislá čárá dolů",
+    "hints.g01.ex3": "Šikmá čárá nahoru doleva",
+    "hints.g0203": "Oblouk po směru (<c>G02</c>) nebo proti směru (<c>G03</c>) hodinových ručiček"
 }
