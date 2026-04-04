@@ -7,6 +7,7 @@ import { Pt5Preview } from "./app/components/Pt5Preview.tsx";
 import { useAppState } from "./app/hooks/useAppState.ts";
 import { FormattedMessage, IntlProvider } from "react-intl";
 import { DrawingPreview } from "./app/components/DrawingPreview.tsx";
+import { Hints } from "./app/components/Hints.tsx";
 
 interface AppProps {
     messages: Record<string, string>;
@@ -28,6 +29,7 @@ export const App: FC<AppProps> = ({ messages, locale }) => {
                     </button>
                 )}
             </div>
+            <Hints />
             <div className="previews-container">
                 {showNcp && <NcpPreview />}
                 <Pt5Preview />
