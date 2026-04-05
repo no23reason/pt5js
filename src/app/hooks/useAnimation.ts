@@ -92,4 +92,3 @@ export function useAnimation({ duration, speed = 1, autoPlay = false, onComplete
         toggle,
     };
 }
-
