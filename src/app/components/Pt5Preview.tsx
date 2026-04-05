@@ -6,7 +6,7 @@ import "./Pt5Preview.css";
 function getGutterLabels(text: string): string[] {
     let lineNum = 1;
     return text.split("\n").map((line) => {
-        if (/^G0[123]/.test(line.trim())) {
+        if (/^G0[123]|G92/.test(line.trim())) {
             return `N${lineNum++}`;
         }
         return "";

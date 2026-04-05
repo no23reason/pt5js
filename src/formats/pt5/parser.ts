@@ -24,7 +24,13 @@ export function parsePt5(lines: string[]): Pt5File {
         const tokens = withoutLineNum.split(/\s+/);
         if (tokens.length === 0) continue;
 
-        const commandTypeStr = tokens[0];
+        let commandTypeStr = tokens[0];
+
+        // for some reason some files in the wild have G92 in place of G02: sanitize it
+        if (commandTypeStr === "G92") {
+            commandTypeStr = "G02";
+        }
+
         if (!MOTION_COMMAND_TYPES.has(commandTypeStr)) continue;
 
         const args: Pt5Command["args"] = {};
