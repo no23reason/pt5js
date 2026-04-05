@@ -1,6 +1,7 @@
 {
-    "filePicker.loadNcp": "Vybrat .ncp soubor",
-    "savePt5Button.savePt5": "Uložit .pt5 soubor",
+    "filePicker.loadNcp": "Načíst ze souboru .ncp",
+    "filePicker.loadPt5": "Načíst ze souboru .pt5",
+    "savePt5Button.savePt5": "Uložit soubor .pt5",
     "drawingPreview.preview": "Náhled",
     "drawingPreview.previewDisclaimer": "Náhled může být nepřesný vzhledem k tomu, co bude stroj skutečně kreslit, vždy si ověřte kreslení na stroji samotném.",
     "drawingPreview.play": "Přehrát",

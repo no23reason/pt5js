@@ -9,6 +9,7 @@ export interface AppState {
     pt5Text: string;
     ncpLoadCount: number;
     setNcpFile: (name: string, lines: string[]) => void;
+    clearNcpFile: () => void;
     setPt5Text: (text: string) => void;
 }
 
@@ -24,9 +25,9 @@ export const useAppState = create<AppState>((set) => ({
             .filter((line) => line !== "%")
             .map((line) =>
                 line
-                    .replace(/^N\d+\s+/, "")          // strip line number
-                    .replace(/\s+M91/, "")             // strip M91 pseudo-arg
-                    .replace(/\s+(M00|M02|M30)$/, "")  // strip trailing stop command
+                    .replace(/^N\d+\s+/, "") // strip line number
+                    .replace(/\s+M91/, "") // strip M91 pseudo-arg
+                    .replace(/\s+(M00|M02|M30)$/, "") // strip trailing stop command
                     .trim(),
             )
             .filter(Boolean)
@@ -35,6 +36,13 @@ export const useAppState = create<AppState>((set) => ({
             ncpLines: lines,
             ncpFileName: name,
             pt5Text,
+            ncpLoadCount: state.ncpLoadCount + 1,
+        }));
+    },
+    clearNcpFile: () => {
+        set((state) => ({
+            ncpLines: [],
+            ncpFileName: "",
             ncpLoadCount: state.ncpLoadCount + 1,
         }));
     },
