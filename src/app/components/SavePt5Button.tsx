@@ -26,7 +26,7 @@ function withPt5Metadata(text: string): string {
         lines[motionIndices[motionIndices.length - 1]] += " M30";
     }
 
-    return ["%" , ...lines].join("\r\n");
+    return ["%", ...lines].join("\r\n");
 }
 
 export const SavePt5Button: FC = () => {

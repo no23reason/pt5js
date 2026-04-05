@@ -8,7 +8,12 @@ const normalize = (a: number) => ((a % TAU) + TAU) % TAU;
  * Returns true if the given angle lies on the arc swept from startAngle to endAngle.
  * counterClockwise=true means the arc goes in the direction of increasing angle (CCW in math space).
  */
-function isAngleInArc(angle: number, startAngle: number, endAngle: number, counterClockwise: boolean): boolean {
+function isAngleInArc(
+    angle: number,
+    startAngle: number,
+    endAngle: number,
+    counterClockwise: boolean,
+): boolean {
     const s = normalize(startAngle);
     const e = normalize(endAngle);
     const a = normalize(angle);
@@ -20,11 +25,18 @@ function isAngleInArc(angle: number, startAngle: number, endAngle: number, count
 }
 
 function expandBBoxForArc(
-    minX: number, minY: number, maxX: number, maxY: number,
-    cx: number, cy: number, radius: number,
-    startAngle: number, endAngle: number, counterClockwise: boolean,
+    minX: number,
+    minY: number,
+    maxX: number,
+    maxY: number,
+    cx: number,
+    cy: number,
+    radius: number,
+    startAngle: number,
+    endAngle: number,
+    counterClockwise: boolean,
 ): [number, number, number, number] {
-    for (const angle of [0, Math.PI / 2, Math.PI, 3 * Math.PI / 2]) {
+    for (const angle of [0, Math.PI / 2, Math.PI, (3 * Math.PI) / 2]) {
         if (isAngleInArc(angle, startAngle, endAngle, counterClockwise)) {
             minX = Math.min(minX, cx + radius * Math.cos(angle));
             minY = Math.min(minY, cy + radius * Math.sin(angle));
@@ -113,9 +125,16 @@ export function pt5ToDrawing(pt5: Pt5File): Drawing {
 
                     // Expand bounding box to include any cardinal extremes the arc sweeps through
                     [minX, minY, maxX, maxY] = expandBBoxForArc(
-                        minX, minY, maxX, maxY,
-                        centerX, centerY, radius,
-                        angleFromCenterToStart, angleFromCenterToEnd, counterClockwise,
+                        minX,
+                        minY,
+                        maxX,
+                        maxY,
+                        centerX,
+                        centerY,
+                        radius,
+                        angleFromCenterToStart,
+                        angleFromCenterToEnd,
+                        counterClockwise,
                     );
                 }
                 break;
