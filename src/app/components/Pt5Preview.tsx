@@ -16,7 +16,7 @@ function getGutterLabels(text: string): string[] {
 export const Pt5Preview: FC = () => {
     const pt5Text = useAppState((state) => state.pt5Text);
     const setPt5Text = useAppState((state) => state.setPt5Text);
-    const ncpFileName = useAppState((state) => state.ncpFileName);
+    const fileName = useAppState((state) => state.fileName);
     const gutterRef = useRef<HTMLPreElement>(null);
 
     const gutterLabels = getGutterLabels(pt5Text);
@@ -29,7 +29,7 @@ export const Pt5Preview: FC = () => {
 
     return (
         <div>
-            <h2>{ncpFileName ? `${ncpFileName.split(".", 1)[0]}.pt5` : "PT5 Editor"}</h2>
+            <h2>{fileName ? `${fileName}.pt5` : "PT5 Editor"}</h2>
             <div className="pt5-editor-wrapper">
                 <pre ref={gutterRef} className="pt5-editor-gutter">
                     {gutterLabels.join("\n")}
