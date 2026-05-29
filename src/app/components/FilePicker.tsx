@@ -23,14 +23,16 @@ export const FilePicker: FC = () => {
     const setNcpFile = useAppState((state) => state.setNcpFile);
     const clearNcpFile = useAppState((state) => state.clearNcpFile);
     const setPt5Text = useAppState((state) => state.setPt5Text);
+    const setFileName = useAppState((state) => state.setFileName);
 
     const onNcpFileSelect = (content: string, fileName: string) => {
         setNcpFile(fileName, content.split("\n"));
     };
 
-    const onPt5FileSelect = (content: string) => {
+    const onPt5FileSelect = (content: string, fileName: string) => {
         clearNcpFile();
         setPt5Text(stripPt5(content));
+        setFileName(fileName);
     };
 
     return (

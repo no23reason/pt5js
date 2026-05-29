@@ -32,7 +32,7 @@ function withPt5Metadata(text: string): string {
 
 export const SavePt5Button: FC = () => {
     const pt5Text = useAppState((state) => state.pt5Text);
-    const ncpFileName = useAppState((state) => state.ncpFileName);
+    const fileName = useAppState((state) => state.fileName);
 
     const handleSave = () => {
         const content = withPt5Metadata(pt5Text);
@@ -41,7 +41,7 @@ export const SavePt5Button: FC = () => {
 
         const a = document.createElement("a");
         a.href = url;
-        a.download = ncpFileName ? `${ncpFileName.split(".", 1)[0]}.pt5` : "output.pt5";
+        a.download = fileName ? `${fileName}.pt5` : "output.pt5";
         document.body.appendChild(a);
         a.click();
         setTimeout(() => {

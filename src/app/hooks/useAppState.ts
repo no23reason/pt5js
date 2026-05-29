@@ -4,21 +4,23 @@ import { ncpToPt5 } from "../../formats/conversion/ncpToPt5.ts";
 import { serializePt5 } from "../../formats/pt5/serializer.ts";
 
 export interface AppState {
-    ncpFileName: string;
+    fileName: string;
     ncpLines: string[];
     pt5Text: string;
     ncpLoadCount: number;
     setNcpFile: (name: string, lines: string[]) => void;
     clearNcpFile: () => void;
     setPt5Text: (text: string) => void;
+    setFileName: (fileName: string) => void;
 }
 
 export const useAppState = create<AppState>((set) => ({
-    ncpFileName: "",
+    fileName: "",
     ncpLines: [],
     pt5Text: "",
+    pt5FileName: "",
     ncpLoadCount: 0,
-    setNcpFile: (name: string, lines: string[]) => {
+    setNcpFile: (name, lines) => {
         const parsed = parseNcp(lines);
         const converted = ncpToPt5(parsed);
         const pt5Text = [...serializePt5(converted)]
@@ -34,7 +36,7 @@ export const useAppState = create<AppState>((set) => ({
             .join("\n");
         set((state) => ({
             ncpLines: lines,
-            ncpFileName: name,
+            fileName: name.split(".", 1)[0],
             pt5Text,
             ncpLoadCount: state.ncpLoadCount + 1,
         }));
@@ -42,9 +44,10 @@ export const useAppState = create<AppState>((set) => ({
     clearNcpFile: () => {
         set((state) => ({
             ncpLines: [],
-            ncpFileName: "",
             ncpLoadCount: state.ncpLoadCount + 1,
+            fileName: "",
         }));
     },
-    setPt5Text: (text: string) => set({ pt5Text: text }),
+    setPt5Text: (text) => set({ pt5Text: text }),
+    setFileName: (fileName) => set({ fileName: fileName.split(".", 1)[0] }),
 }));
