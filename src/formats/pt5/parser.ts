@@ -31,6 +31,11 @@ export function parsePt5(lines: string[]): Pt5File {
             commandTypeStr = "G02";
         }
 
+        // for some reason some files in the wild have G93 in place of G03: sanitize it
+        if (commandTypeStr === "G93") {
+            commandTypeStr = "G03";
+        }
+
         if (!MOTION_COMMAND_TYPES.has(commandTypeStr)) continue;
 
         const args: Pt5Command["args"] = {};
